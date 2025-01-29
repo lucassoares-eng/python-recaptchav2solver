@@ -11,13 +11,13 @@ ReCAPTCHASolver is a Python package that automates the process of solving Google
 
 ## Installation  
 ```bash
-pip install recaptcha_solver
+pip install recaptchav2solver
 ```
 
 ## Usage
 ```python
 from selenium import webdriver
-from recaptcha_solver import ReCAPTCHASolver
+from recaptchav2solver import ReCAPTCHASolver
 
 # Selenium driver setup
 driver = webdriver.Chrome()  # or webdriver.Firefox(), depending on the browser you use
