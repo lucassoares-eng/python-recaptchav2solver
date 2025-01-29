@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name="recaptchav2solver",
-    version="1.1.0",
+    version="1.1.2",
     author="Lucas Soares",
     author_email="lucasjs.eng@gmail.com",
     description="A Python package to solve reCAPTCHA audio challenges using Selenium and SpeechRecognition",
