@@ -9,6 +9,12 @@ ReCAPTCHASolver is a Python package that automates the process of solving Google
 - Verifies the installation of FFmpeg and configures it automatically
 - Works with Selenium and requires the driver with the reCAPTCHA iframe to be provided
 
+
+
+## Demo  
+![ReCAPTCHA Solver in Action](https://github.com/lucassoares-eng/my_website/blob/main/app/static/recaptcha-solver.gif?raw=true)
+
+
 ## Installation  
 ```bash
 pip install recaptchav2solver

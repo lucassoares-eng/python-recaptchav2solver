@@ -1,5 +1,6 @@
 import os
 import random
+import shutil
 import time
 import requests
 import zipfile
@@ -29,14 +30,34 @@ class ReCAPTCHASolver:
             print("Downloading FFmpeg...")
             zip_path = os.path.join(self.FFMPEG_DIR, "ffmpeg.zip")
             os.makedirs(self.FFMPEG_DIR, exist_ok=True)
+            
+            # Baixar o arquivo ZIP
             response = requests.get(self.FFMPEG_URL)
             with open(zip_path, "wb") as file:
                 file.write(response.content)
+
+            # Extrair o conteúdo para uma pasta temporária
+            temp_extract_dir = os.path.join(self.FFMPEG_DIR, "temp_ffmpeg")
+            os.makedirs(temp_extract_dir, exist_ok=True)
             with zipfile.ZipFile(zip_path, "r") as zip_ref:
-                zip_ref.extractall(self.FFMPEG_DIR)
+                zip_ref.extractall(temp_extract_dir)
+
+            # Identificar a pasta extraída (de nome variável, tipo "ffmpeg-7.1-essentials_build")
+            extracted_folders = [f for f in os.listdir(temp_extract_dir) if os.path.isdir(os.path.join(temp_extract_dir, f))]
+            if extracted_folders:
+                extracted_path = os.path.join(temp_extract_dir, extracted_folders[0])
+                
+                # Mover todo o conteúdo da pasta extraída para FFMPEG_DIR
+                for item in os.listdir(extracted_path):
+                    shutil.move(os.path.join(extracted_path, item), self.FFMPEG_DIR)
+
+            # Limpar arquivos temporários
+            shutil.rmtree(temp_extract_dir)
             os.remove(zip_path)
+
         if not os.path.exists(ffmpeg_exe):
             raise FileNotFoundError("FFmpeg setup failed.")
+        
         os.environ["PATH"] += os.pathsep + os.path.dirname(ffmpeg_exe)
         AudioSegment.converter = ffmpeg_exe
         print('FFmpeg successfully configured!')
